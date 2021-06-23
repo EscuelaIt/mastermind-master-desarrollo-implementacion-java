@@ -1,0 +1,29 @@
+@startuml desarrollo_implementacion
+package "  "  as usantatecla.mastermind {
+}
+package "  "  as usantatecla.utils {
+}
+package "  "  as java.io {
+}
+package "  "  as java.util {
+}
+
+[mastermind.jar] as jar
+
+jar *--> usantatecla.mastermind
+jar *--> usantatecla.utils
+jar *--> java.io
+jar *--> java.util
+@enduml
+
+@startuml despliegue_fisica
+node node #DDDDDD [
+<b>Personal Computer</b>
+----
+
+]
+
+[ mastermind.jar ] as component
+
+node *--> component
+@enduml

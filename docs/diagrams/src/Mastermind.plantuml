@@ -1,0 +1,165 @@
+@startuml TicTacToe
+
+title Secuencia versiones Tictactoe
+
+state Solucion {
+[*] --> domainModel
+
+state domainModel{
+[*] --> dm.basic
+    state dm.basic
+note right: Clases del Modelo del Dominio\npero acopladas a tecnologías de\ninterfazahora y todas con la Ley\ndel Cambio Continuo y de granos\ngrueso con el advenimiento\nde nueva funcionalidad.
+note left of dm.basic #15D2F3
+  Básica
+end note
+dm.basic -->[*]
+}
+
+state documentView
+state modelViewPresenter
+ note left of modelViewController #15D2F3
+  Básica
+end note
+state modelViewController
+note right: Baile de la Triada.
+
+domainModel --> documentView:Mantenimiento correctivo
+
+state documentView {
+[*] --> console
+ note left of console #15D2F3
+  Básica
+end note
+  state console
+  note right: Clases Vistas de Texto separadas\nde los Modelos del Dominio pero con\nModelos de grano grueso con el\nadvenimiento de nueva funcionalidad.
+
+   note left of withoutFactoryMethod #15D2F3
+  Gráficos
+end note
+  state withoutFactoryMethod
+  note right:Clase Vistas de Interfaz Gráfica de Usuario\npero con DRY en Vistas de tecnologías\ndiferentes y con Modelos de grano grueso\ncon el advenimiento de nueva funcionalidad.
+
+  note left of withFactoryMethod #15D2F3
+  Gráficos
+end note
+  state withFactoryMethod
+  note right: Clase Vista abstracta para Open/Close de sus\ntecnologías pero con Modelos de grano grueso\ncon el advenimiento de nueva funcionalidad.
+
+  console --> withoutFactoryMethod:Mantenimiento perfectivo
+  withoutFactoryMethod --> withFactoryMethod:Mantenimiento correctivo
+  withFactoryMethod-->[*]
+}
+
+documentView --> modelViewPresenter
+
+
+state modelViewPresenter{
+[*] --> presentationModel
+[*] --> passiveView
+presentationModel-->[*]
+
+
+state presentationModel{
+note left of basic #15D2F3
+  Gráficos
+end note
+state basic
+note right:Clases Controladoras entre Vistas y Modelos por\ncada Caso de Uso pero con la clase Principal y las\nVistas acopladas a cada controlador actual y futuro.
+
+note left of withFacade #15D2F3
+  Gráficos
+end note
+state withFacade
+note right:Clase Lógica que encapsula Controladores y Modelos\npero con Vistas con DRY en la Lógica de Control.
+
+note left of withoutDoubleDispatching #15D2F3
+  Gráficos
+end note
+state withoutDoubleDispatching
+note right:Clase Estado para la Inversión de Control de Vistas\na la Lógica pero violando el Principio de Sustitución\nde Liskov.
+
+note left of withDoubleDispatching #15D2F3
+  Gráficos
+end note
+state withDoubleDispatching
+note right:Clase Vistador de Controladores para Técnica\nde Doble Despacho
+
+note left of withComposite #15D2F3
+  UndoRedo
+end note
+state withComposite
+note right:Clase Comando del menú y Controlador Compuesto\nde ciertos Estados para Open/Close\ncon nuevos Casos de Uso.
+
+note left of withoutProxy #15D2F3
+  ClienteServidor
+end note
+state withoutProxy
+note right:Clase TCP/IP para tecnología de Despliegue\npero con Controladores acoplados, poco cohesivos y\ngrano grueso con cada nueva tecnología.
+
+note left of withProxy #15D2F3
+  ClienteServidor
+end note
+state withProxy
+note right:Clases Proxy para Open/Close para nuevas\ntecnologías de Despliegue.
+
+note left of withoutDAO #15D2F3
+  Ficheros
+end note
+state withoutDAO
+note right:Clases Vistas y Controladores para la tecnología\nde persistencia pero con Modelos de grano grueso,\nbaja cohesión y alto acoplamiento a tecnologías\nde persistencia de ficheros.
+
+note left of withDAO #15D2F3
+  Ficheros
+end note
+state withDAO
+note right: Patrón DAO
+
+note left of withoutPrototype #15D2F3
+  BasesDatos
+end note
+state withoutPrototype
+note right:Nuevas Vistas y DAOS para la nueva tecnología\npero con clase Principal acoplada a las tecnologías\nactuales y futuras de persistencia.
+
+note left of withPrototype #15D2F3
+  BasesDatos
+end note
+state withPrototype
+note right:Open/Close para arranque con configuración de persistencia
+
+
+basic --> withFacade
+withFacade --> withoutDoubleDispatching
+withoutDoubleDispatching --> withDoubleDispatching
+withDoubleDispatching --> withComposite
+withComposite --> withoutProxy
+withoutProxy --> withProxy
+withProxy --> withoutDAO
+withoutDAO --> withDAO
+withDAO --> withoutPrototype
+withoutPrototype --> withPrototype
+
+
+}
+ note left of passiveView #15D2F3
+  Básica
+end note
+state passiveView
+note right: Baile de la Triada.
+
+ note left of supervisorController #15D2F3
+  Básica
+end note
+state supervisorController
+note right: Baile de la Triada.
+
+passiveView-->supervisorController
+supervisorController-->[*]
+}
+
+modelViewPresenter --> modelViewController
+
+}
+modelViewController-->[*]
+}
+
+@enduml

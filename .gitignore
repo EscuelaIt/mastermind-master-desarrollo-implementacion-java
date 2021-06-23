@@ -1,0 +1,13 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+target
+
+### VSCode Java config fiels ###
+.project
+.settings
+.classpath
+.vscode
