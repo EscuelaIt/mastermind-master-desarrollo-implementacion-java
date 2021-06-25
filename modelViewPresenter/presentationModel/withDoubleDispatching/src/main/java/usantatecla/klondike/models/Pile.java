@@ -4,61 +4,58 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class Pile extends CardStack {
+import usantatecla.klondike.types.Card;
 
-    private int numberOfFaceUpCards;
+class Pile extends CardStack {
 
-    public Pile(Stock stock, int position) {
-        this.numberOfFaceUpCards = 0;
-        this.cards.addAll(stock.takeTop(position + 1));
-        if (!this.cards.empty()) {
-            flipFirstCard();
-        }
+    Pile(int position, Stock stock) {
+        super();
+        this.cards.addAll(stock.pop(position + 1));
+        this.flipPeek();
+    }
+    
+    private void flipPeek() {
+        this.cards.push(this.cards.pop().flip());
     }
 
-    private void flipFirstCard() {
-        assert !this.cards.empty() && this.numberOfFaceUpCards == 0 && this.cards.peek().isFacedUp();
-        this.cards.peek().flip();
-        numberOfFaceUpCards++;
-    }
-
-    public boolean fitsIn(Card card) {
+    boolean fitsIn(Card card) {
         assert card != null;
-        return (this.cards.empty() && card.getNumber() == Number.KING) ||
-                (!this.cards.empty() && this.cards.peek().isNextTo(card) && this.cards.peek().getColor() != card.getColor());
+
+        return (this.cards.empty() && card.isKing()) ||
+                (!this.cards.empty() && this.cards.peek().isNextTo(card) 
+                && this.cards.peek().sameColor(card));
     }
 
-    public List<Card> getTop(int numberOfCards) {
-        assert numberOfCards <= this.numberOfFaceUpCards;
+    boolean areFaceUp(int numberOfCards) {
+        for (Card card : this.peek(numberOfCards)) {
+            if (!card.isFacedUp()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    List<Card> peek(int numberOfCards) {
         return new ArrayList<>(this.cards.subList(this.cards.size() - numberOfCards, this.cards.size()));
     }
 
-    public void addToTop(List<Card> cards) {
-        assert cards != null;
-        this.cards.addAll(cards);
-        numberOfFaceUpCards += cards.size();
-    }
-
-    public void removeTop(int numberOfCards) {
-        assert numberOfCards <= this.numberOfFaceUpCards;
+    void pop(int numberOfCards) {
         for (int i = 0; i < numberOfCards; i++) {
             this.cards.pop();
-            numberOfFaceUpCards--;
         }
-        if (this.numberOfFaceUpCards == 0 && !this.cards.empty()) {
-            flipFirstCard();
+        if (!this.cards.empty() && !this.cards.peek().isFacedUp()) {
+            this.flipPeek();
         }
     }
 
-    public int numberOfFaceUpCards() {
-        return this.numberOfFaceUpCards;
+    void push(List<Card> cards) {
+        assert cards != null;
+
+        this.cards.addAll(cards);
     }
 
-    public boolean empty() {
-        return this.cards.empty();
-    }
-
-    public Stack<Card> getCards() {
+    Stack<Card> getCards() {
         return this.cards;
     }
+
 }

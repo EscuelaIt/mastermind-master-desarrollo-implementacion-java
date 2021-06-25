@@ -2,28 +2,34 @@ package usantatecla.klondike.models;
 
 import java.util.Stack;
 
-public abstract class CardStack {
+import usantatecla.klondike.types.Card;
 
-    protected Stack<Card> cards;
+abstract class CardStack {
 
-    public CardStack() {
+  protected Stack<Card> cards;
+
+  protected CardStack() {
         this.cards = new Stack<>();
     }
 
-    public boolean empty() {
-        return this.cards.empty();
-    }
+  public boolean empty() {
+    return this.cards.empty();
+  }
 
-    public Card peek() {
-        return this.cards.peek();
-    }
+  public Card peek() {
+    assert !this.cards.empty();
 
-    public Card pop() {
-        return this.cards.pop();
-    }
+    return this.cards.peek();
+  }
 
-    public void push(Card card) {
-        this.cards.push(card);
-    }
+  public Card pop() {
+    assert !this.cards.empty();
+
+    return this.cards.pop();
+  }
+
+  public void push(Card card) {
+    this.cards.push(card);
+  }
 
 }

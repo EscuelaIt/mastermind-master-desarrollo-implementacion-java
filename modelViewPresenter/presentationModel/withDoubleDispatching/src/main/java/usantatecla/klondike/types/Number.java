@@ -1,4 +1,4 @@
-package usantatecla.klondike.models;
+package usantatecla.klondike.types;
 
 public enum Number {
     AS,
@@ -18,4 +18,5 @@ public enum Number {
     public int getValue() {
         return this.ordinal() + 1;
     }
+
 }

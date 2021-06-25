@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Stock extends CardStack {
+import usantatecla.klondike.types.Card;
+import usantatecla.klondike.types.Number;
+import usantatecla.klondike.types.Suit;
 
-    public Stock() {
+class Stock extends CardStack {
+
+    Stock() {
         super();
         for (Suit suit : Suit.values()) {
             for (Number number : Number.values()) {
@@ -16,12 +20,12 @@ public class Stock extends CardStack {
         Collections.shuffle(this.cards);
     }
 
-    public List<Card> takeTop(int quantity) {
-        assert 0 < quantity && quantity <= this.cards.size();
-        
-        List<Card> cardsToReturn = new ArrayList<>(this.cards.subList(0, quantity));
-        this.cards.removeAll(cardsToReturn);
-        return cardsToReturn;
+    List<Card> pop(int amount) {
+        assert 0 < amount && amount <= this.cards.size();
+
+        List<Card> cards = new ArrayList<>(this.cards.subList(0, amount));
+        this.cards.removeAll(cards);
+        return cards;
     }
 
 }

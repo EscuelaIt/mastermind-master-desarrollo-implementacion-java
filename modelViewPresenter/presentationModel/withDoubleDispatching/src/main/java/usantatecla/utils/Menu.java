@@ -9,28 +9,27 @@ public abstract class Menu {
 
     public Menu() {
         this.commandList = new ArrayList<Command>();
+        for (int i = 0; i < this.commandList.size(); i++) {
+            this.commandList.add(this.commandList.get(i));
+        }
     }
 
     public void execute() {
-        ArrayList<Command> commands = new ArrayList<Command>();
-        for (int i = 0; i < this.commandList.size(); i++) {
-            commands.add(this.commandList.get(i));
-        }
         boolean error;
         int option;
         do {
             error = false;
-            for (int i = 0; i < commands.size(); i++) {
-                IO.writeln((i + 1) + ") " + commands.get(i).getTitle());
+            for (int i = 0; i < this.commandList.size(); i++) {
+                Console.getInstance().writeln((i + 1) + ") " + this.commandList.get(i).getTitle());
             }
-            IO.write(OPTION);
-            option = IO.readInt("") - 1;
-            if (!new ClosedInterval(0, commands.size() - 1).includes(option)) {
+            Console.getInstance().write(OPTION);
+            option = Console.getInstance().readInt("") - 1;
+            if (!new ClosedInterval(0, this.commandList.size() - 1).isIncluded(option)) {
                 error = true;
             }
-            IO.writeln();
+            Console.getInstance().writeln();
         } while (error);
-        commands.get(option).execute();
+        this.commandList.get(option).execute();
     }
 
     protected void addCommand(Command command) {

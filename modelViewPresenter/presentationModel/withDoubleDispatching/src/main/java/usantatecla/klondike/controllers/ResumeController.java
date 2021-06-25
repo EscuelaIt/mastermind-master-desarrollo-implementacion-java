@@ -9,12 +9,13 @@ public class ResumeController extends Controller {
         super(game, state);
     }
 
-    public void resume(boolean newGame) {
-        if (newGame) {
-            this.game.clear();
-            this.state.reset();
-        } else {
-            this.state.next();
-        }
+    public void resume() {
+        this.state.reset();
+        this.game.reset();
+    }
+
+    @Override
+    public void accept(ControllerVisitor controllerVisitor){
+        controllerVisitor.visit(this);
     }
 }

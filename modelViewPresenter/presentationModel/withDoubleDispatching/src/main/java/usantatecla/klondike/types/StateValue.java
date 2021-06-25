@@ -1,4 +1,4 @@
-package usantatecla.klondike.models;
+package usantatecla.klondike.types;
 
 public enum StateValue {
     INITIAL,

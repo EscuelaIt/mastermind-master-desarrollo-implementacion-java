@@ -1,14 +1,19 @@
 package usantatecla.klondike.controllers;
 
-import usantatecla.klondike.models.Error;
 import usantatecla.klondike.models.Game;
 import usantatecla.klondike.models.State;
-import usantatecla.klondike.models.Suit;
+import usantatecla.klondike.types.Error;
+import usantatecla.klondike.types.Number;
+import usantatecla.klondike.types.Suit;
 
 public class MoveController extends Controller {
 
     public MoveController(Game game, State state) {
         super(game, state);
+    }
+
+    public int getMaxPileLength() {
+        return Game.NUMBER_OF_PILES + Number.values().length - 1;
     }
 
     public Error moveFromFoundationToPile(Suit suit, int pileIndex) {
@@ -17,7 +22,7 @@ public class MoveController extends Controller {
 
     public Error moveFromPileToFoundation(int pileIndex, Suit suit) {
         Error error = this.game.moveFromPileToFoundation(pileIndex, suit);
-        if (error == null && this.game.isFinished()) {
+        if (error == null && this.game.isComplete()) {
             this.state.next();
         }
         return error;
@@ -33,7 +38,7 @@ public class MoveController extends Controller {
 
     public Error moveFromWasteToFoundation(Suit suit) {
         Error error = this.game.moveFromWasteToFoundation(suit);
-        if (error == null && this.game.isFinished()) {
+        if (error == null && this.game.isComplete()) {
             this.state.next();
         }
         return error;
@@ -46,4 +51,10 @@ public class MoveController extends Controller {
     public Error moveFromWasteToStock() {
         return this.game.moveFromWasteToStock();
     }
+
+    @Override
+    public void accept(ControllerVisitor controllerVisitor) {
+        controllerVisitor.visit(this);
+    }
+
 }

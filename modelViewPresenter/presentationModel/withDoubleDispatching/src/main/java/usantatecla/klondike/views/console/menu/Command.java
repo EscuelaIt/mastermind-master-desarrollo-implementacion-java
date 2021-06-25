@@ -1,8 +1,9 @@
 package usantatecla.klondike.views.console.menu;
 
 import usantatecla.klondike.controllers.MoveController;
-import usantatecla.klondike.models.Error;
-import usantatecla.utils.IO;
+import usantatecla.klondike.types.Error;
+import usantatecla.klondike.views.console.types.Message;
+import usantatecla.utils.Console;
 
 public abstract class Command extends usantatecla.utils.Command {
 
@@ -16,10 +17,11 @@ public abstract class Command extends usantatecla.utils.Command {
     @Override
     protected void execute() {
         Error error = this.move();
-        if (error != null) {
-            IO.writeError(Message.INVALID_MOVE, error.getMessage());
+        if (!error.isNull()) {
+            Console.getInstance().writeln(Message.INVALID_MOVE.toString(error));
         }
     }
 
     protected abstract Error move();
+
 }

@@ -1,5 +1,7 @@
 package usantatecla.klondike.models;
 
+import usantatecla.klondike.types.StateValue;
+
 public class State {
 
     private StateValue stateValue;

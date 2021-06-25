@@ -1,27 +1,25 @@
 package usantatecla.klondike.views.console;
 
 import usantatecla.klondike.controllers.Controller;
-import usantatecla.klondike.models.Card;
-import usantatecla.utils.IO;
+import usantatecla.klondike.types.Card;
+import usantatecla.klondike.views.console.types.CardView;
+import usantatecla.utils.Console;
 
 public abstract class CardStackView {
+  
+  private final String message;
+  protected final Controller controller;
+    
+  public CardStackView(Controller controller, String message) {
+      this.controller = controller;
+      this.message = message;
+  }
 
-    protected final Controller controller;
+  public void writeln() {
+      Console.getInstance().write(this.message);
+      new CardView(this.getPeek()).writeln();
+  }
 
-    private final String title;
+  public abstract Card getPeek();
 
-    CardStackView(Controller controller, String title) {
-        this.controller = controller;
-        this.title = title;
-    }
-
-    protected void writeln(Card card) {
-        IO.write(title);
-        if (card == null)
-            IO.writeln(Message.EMPTY);
-        else
-            new CardView(card).writeln();
-    }
-
-    public abstract void writeln();
 }

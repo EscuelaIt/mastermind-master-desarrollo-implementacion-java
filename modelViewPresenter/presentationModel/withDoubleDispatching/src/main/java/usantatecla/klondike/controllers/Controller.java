@@ -1,9 +1,9 @@
 package usantatecla.klondike.controllers;
 
-import usantatecla.klondike.models.Card;
 import usantatecla.klondike.models.Game;
 import usantatecla.klondike.models.State;
-import usantatecla.klondike.models.Suit;
+import usantatecla.klondike.types.Card;
+import usantatecla.klondike.types.Suit;
 
 import java.util.Stack;
 
@@ -35,7 +35,6 @@ public abstract class Controller {
         return this.game.getPileCards(index);
     }
 
-    public int getNumberOfFaceUpCardsInPile(int index) {
-        return this.game.getNumberOfFaceUpCardsInPile(index);
-    }
+    public abstract void accept(ControllerVisitor controllerVisitor);
+
 }

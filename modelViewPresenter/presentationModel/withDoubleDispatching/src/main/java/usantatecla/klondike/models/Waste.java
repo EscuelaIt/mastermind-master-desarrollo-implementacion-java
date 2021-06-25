@@ -1,4 +1,9 @@
 package usantatecla.klondike.models;
 
-public class Waste extends CardStack {
+class Waste extends CardStack {
+
+  Waste() {
+    super();
+  }
+
 }

@@ -2,7 +2,7 @@ package usantatecla.klondike.controllers;
 
 import usantatecla.klondike.models.Game;
 import usantatecla.klondike.models.State;
-import usantatecla.klondike.models.StateValue;
+import usantatecla.klondike.types.StateValue;
 
 import java.util.HashMap;
 import java.util.Map;

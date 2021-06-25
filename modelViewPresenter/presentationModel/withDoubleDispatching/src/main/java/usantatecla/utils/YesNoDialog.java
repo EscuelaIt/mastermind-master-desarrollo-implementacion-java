@@ -24,10 +24,10 @@ public class YesNoDialog {
         char answer;
         boolean ok;
         do {
-            answer = IO.readChar(title + YesNoDialog.QUESTION);
+            answer = Console.getInstance().readChar(title + YesNoDialog.QUESTION);
             ok = YesNoDialog.isAfirmative(answer) || YesNoDialog.isNegative(answer);
             if (!ok) {
-                IO.writeln(YesNoDialog.MESSAGE);
+                Console.getInstance().writeln(YesNoDialog.MESSAGE);
             }
         } while (!ok);
         return YesNoDialog.isAfirmative(answer);

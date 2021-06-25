@@ -1,14 +1,18 @@
 package usantatecla.klondike.views.console;
 
 import usantatecla.klondike.controllers.Controller;
+import usantatecla.klondike.types.Card;
+import usantatecla.klondike.views.console.types.Message;
 
 public class WasteView extends CardStackView {
-
+    
     public WasteView(Controller controller) {
-        super(controller, Message.WASTE_TITLE);
+        super(controller, Message.WASTE_TITLE.toString());
     }
 
-    public void writeln() {
-        super.writeln(this.controller.peekWaste());
+    @Override
+    public Card getPeek() {
+        return this.controller.peekWaste();
     }
+
 }

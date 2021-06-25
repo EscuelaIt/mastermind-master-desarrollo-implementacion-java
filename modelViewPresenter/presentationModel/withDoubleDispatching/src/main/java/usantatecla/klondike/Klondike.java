@@ -3,7 +3,6 @@ package usantatecla.klondike;
 import usantatecla.klondike.controllers.Controller;
 import usantatecla.klondike.controllers.Logic;
 import usantatecla.klondike.views.View;
-import usantatecla.klondike.views.console.ConsoleView;
 
 public class Klondike {
 
@@ -12,11 +11,7 @@ public class Klondike {
 
     private Klondike() {
         this.logic = new Logic();
-        this.view = new ConsoleView();
-    }
-
-    public static void main(String[] args) {
-        new Klondike().play();
+        this.view = new usantatecla.klondike.views.console.View();
     }
 
     public void play() {
@@ -26,4 +21,9 @@ public class Klondike {
             this.view.interact(controller);
         } while (controller != null);
     }
+
+    public static void main(String[] args) {
+        new Klondike().play();
+    }
+
 }
